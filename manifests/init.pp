@@ -23,7 +23,7 @@ class artifactory(
 
   $downloadURL  = undef,
 ) {
-  $webappdir    = "${installdir}/jfrog-${product}-${version}"
+  $webappdir    = "${installdir}/artifactory-powerpack-${version}"
 
   anchor { 'artifactory::start': } ->
   class { 'artifactory::install':

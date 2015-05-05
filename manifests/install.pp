@@ -33,19 +33,12 @@ class artifactory::install (
 
   require staging
   $file = "artifactory-powerpack-standalone-${version}.${format}"
-  if ! defined(File[$webappdir]) {
-    file { $webappdir:
-      ensure => 'directory',
-      owner  => $user,
-      group  => $group,
-    }
-  }
   staging::file { $file:
     source  => "${downloadURL}/${file}",
     timeout => 1800,
   } ->
   staging::extract { $file:
-    target  => $webappdir,
+    target  => $installdir,
     creates => "${webappdir}/etc",
     strip   => 1,
     user    => $user,
@@ -54,8 +47,7 @@ class artifactory::install (
     before  => File[$datadir],
     require => [
       File[$installdir],
-      User[$user],
-      File[$webappdir] ],
+      User[$user] ],
   }
 
   file { $datadir:
