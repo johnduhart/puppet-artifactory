@@ -65,4 +65,31 @@ class artifactory::install (
     command     => "/bin/cp -r ${webappdir}/* ${datadir}",
     creates     => "${datadir}/etc",
   }
+
+  file { ["${datadir}/bin", "${datadir}/tomcat", "${datadir}/webapps"]:
+    ensure => 'absent',
+    force => true,
+    require => Exec["copy_${webappdir}"]
+  }
+
+  file { "${webappdir}/etc":
+    ensure => 'link',
+    target => "${datadir}/etc",
+    force => true,
+    require => Exec["copy_${webappdir}"],
+  }
+
+  file { "${webappdir}/data":
+    ensure => 'link',
+    target => "${datadir}/data",
+    force => true,
+    require => Exec["copy_${webappdir}"],
+  }
+
+  file { "${webappdir}/logs":
+    ensure => 'link',
+    target => "${datadir}/logs",
+    force => true,
+    require => Exec["copy_${webappdir}"],
+  }
 }
