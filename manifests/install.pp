@@ -78,6 +78,10 @@ class artifactory::install (
     ensure => 'absent',
     force => true,
     require => Exec["copy_${webappdir}"]
+  } ~>
+  exec { "chwon_${datadir}":
+    command     => "/bin/chown -R ${user}:${group} ${datadir}",
+    refreshonly => true,
   }
 
   file { "${webappdir}/etc":
