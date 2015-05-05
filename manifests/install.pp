@@ -50,10 +50,13 @@ class artifactory::install (
       User[$user] ],
   }
 
-  file { $datadir:
-    ensure  => 'directory',
+  File {
     owner   => $user,
     group   => $group,
+  }
+
+  file { $datadir:
+    ensure  => 'directory',
     require => User[$user],
   }->
   exec { "chown_${webappdir}":
@@ -64,6 +67,11 @@ class artifactory::install (
   exec { "copy_${webappdir}":
     command     => "/bin/cp -r ${webappdir}/* ${datadir}",
     creates     => "${datadir}/etc",
+  }
+
+  file { "${datadir}/data":
+    ensure => 'directory',
+    require => File[$datadir],
   }
 
   file { ["${datadir}/bin", "${datadir}/tomcat", "${datadir}/webapps"]:
