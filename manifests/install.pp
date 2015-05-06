@@ -70,10 +70,17 @@ class artifactory::install (
     command     => "/bin/chown -R ${user}:${group} ${webappdir}",
     refreshonly => true,
     subscribe   => User[$artifactory::user]
-  } ->
+  }
+  
+  exec { "chmod_${webappdir}/tomcat/bin":
+    command     => "/bin/chmod a+x ${webappdir}/tomcat/bin/*",
+    require     => Exec["chown_${webappdir}"],
+  }
+
   exec { "copy_${webappdir}":
     command     => "/bin/cp -r ${webappdir}/* ${datadir}",
     creates     => "${datadir}/etc",
+    require     => Exec["chown_${webappdir}"],
   }
 
   file { "${datadir}/data":
@@ -114,5 +121,23 @@ class artifactory::install (
 
   file { "${webappdir}/run":
     ensure => 'directory',
+  }
+
+  file { "${webappdir}/tomcat/work":
+    ensure => 'directory',
+  }
+
+  file { "${webappdir}/tomcat/temp":
+    ensure => 'directory',
+  }
+
+  file { "${webappdir}/logs/tomcat":
+    ensure => 'directory',
+    require => File["${webappdir}/logs"],
+  } ->
+  file { "${webappdir}/tomcat/logs":
+    ensure => 'link',
+    target => "${webappdir}/logs/tomcat",
+    force => true,
   }
 }

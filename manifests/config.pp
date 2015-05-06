@@ -33,6 +33,10 @@ class artifactory::config ($webappdir) {
     notify  => Class['artifactory::service'],
   }
 
+  file { "${webappdir}/tomcat/bin/setenv.sh":
+    content => template('artifactory/setenv.sh.erb'),
+    mode => '0755',
+  } ->
   file { '/etc/default/artifactory':
     content => template('artifactory/artifactory.default.erb'),
     mode => '0755',
