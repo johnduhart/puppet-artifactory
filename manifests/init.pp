@@ -8,6 +8,7 @@ class artifactory(
   $group        = 'artifactory',
 
   # Java Options
+  $javahome     = undef,
   $jvm_xms      = '256m',
   $jvm_xmx      = '1024m',
   $jvm_permgen  = '256m',
@@ -31,6 +32,6 @@ class artifactory(
     webappdir => $webappdir
   } ->
   class { 'artifactory::config': } ~>
-  #class { 'artifactory::service': } ->
+  class { 'artifactory::service': } ->
   anchor { 'artifactory::end': }
 }

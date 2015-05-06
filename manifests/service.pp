@@ -1,10 +1,10 @@
-class teamcity::service(
-  $service_ensure        = $stash::service_ensure,
-  $service_enable        = $stash::service_enable
+class artifactory::service(
+  $service_ensure        = $artifactory::service_ensure,
+  $service_enable        = $artifactory::service_enable
 ) {
-  service { 'teamcity':
+  service { 'artifactory':
       ensure  => $service_ensure,
       enable  => $service_enable,
-      require => File['/etc/init/teamcity.conf'],
+      require => File['/etc/init.d/artifactory'],
     }
 }

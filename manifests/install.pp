@@ -112,4 +112,8 @@ class artifactory::install (
     force => true,
     require => Exec["copy_${webappdir}"],
   }
+
+  file { "${webappdir}/run":
+    ensure => 'directory',
+  }
 }
