@@ -31,6 +31,11 @@ class artifactory::install (
     }
   }
 
+  File {
+    owner   => $user,
+    group   => $group,
+  }
+
   require staging
   $file = "artifactory-powerpack-standalone-${version}.${format}"
   staging::file { $file:
@@ -48,13 +53,7 @@ class artifactory::install (
     require => [
       File[$installdir],
       User[$user] ],
-  }
-  
-  File {
-    owner   => $user,
-    group   => $group,
-  }
-
+  } ->
   staging::file { 'artifactory_postgresql-jbdc41.jar':
     source => 'https://jdbc.postgresql.org/download/postgresql-9.3-1103.jdbc41.jar',
     target => "${artifactory::webappdir}/tomcat/lib/postgresql-9.3-1103.jdbc41.jar",
