@@ -8,5 +8,5 @@ export JAVA_HOME=<%= scope.lookupvar('artifactory::javahome') %>
 export TOMCAT_HOME=$ARTIFACTORY_HOME/tomcat
 export ARTIFACTORY_PID=$ARTIFACTORY_HOME/run/artifactory.pid
 
-export JAVA_OPTIONS="-server -Xms<%= scope.lookupvar('artifactory::java_xms') %> -Xmx<%= scope.lookupvar('artifactory::java_xmx') %> -Xss256k -XX:PermSize=128m -XX:MaxPermSize=256m -XX:+UseG1GC"
+export JAVA_OPTIONS="-server -Xms<%= scope.lookupvar('artifactory::jvm_xms') %> -Xmx<%= scope.lookupvar('artifactory::jvm_xmx') %> -Xss256k -XX:PermSize=128m -XX:MaxPermSize=256m -XX:+UseG1GC"
 export JAVA_OPTIONS="$JAVA_OPTIONS -Djruby.compile.invokedynamic=false -Dfile.encoding=UTF8"
