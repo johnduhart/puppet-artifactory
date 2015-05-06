@@ -31,7 +31,9 @@ class artifactory(
   class { 'artifactory::install':
     webappdir => $webappdir
   } ->
-  class { 'artifactory::config': } ~>
+  class { 'artifactory::config':
+    webappdir => $webappdir
+  } ~>
   class { 'artifactory::service': } ->
   anchor { 'artifactory::end': }
 }

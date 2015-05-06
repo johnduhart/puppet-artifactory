@@ -1,4 +1,4 @@
-class artifactory::config () {
+class artifactory::config ($webappdir) {
 
   File {
     owner => $artifactory::user,
@@ -11,6 +11,24 @@ class artifactory::config () {
     require => [
       Class['artifactory::install'],
       File[$artifactory::datadir]
+    ],
+    notify  => Class['artifactory::service'],
+  }
+
+  file { "${webappdir}/tomcat/conf/server.xml":
+    content => template('artifactory/server.xml.erb'),
+    mode    => '0644',
+    require => [
+      Class['artifactory::install']
+    ],
+    notify  => Class['artifactory::service'],
+  }
+
+  file { "${webappdir}/tomcat/conf/Catalina/localhost/artifactory.xml":
+    content => template('artifactory/artifactory.xml.erb'),
+    mode    => '0644',
+    require => [
+      Class['artifactory::install']
     ],
     notify  => Class['artifactory::service'],
   }
