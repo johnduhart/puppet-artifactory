@@ -20,6 +20,7 @@ class artifactory(
   $service_ensure = running,
   $service_enable = true,
 
+  $filesystemdir = '/home/artifactory/data',
 
   $downloadURL  = undef,
 ) {
@@ -29,7 +30,7 @@ class artifactory(
   class { 'artifactory::install':
     webappdir => $webappdir
   } ->
-  #class { 'artifactory::config': } ~>
+  class { 'artifactory::config': } ~>
   #class { 'artifactory::service': } ->
   anchor { 'artifactory::end': }
 }

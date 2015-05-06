@@ -1,0 +1,7 @@
+type=postgresql
+driver=org.postgresql.Driver
+url=<%= scope.lookupvar('artifactory::dburl') %>
+username=<%= scope.lookupvar('artifactory::dbuser') %>
+password=<%= scope.lookupvar('artifactory::dbpassword') %>
+binary.provider.type=filesystem
+binary.provider.filesystem.dir=<%= scope.lookupvar('artifactory::filesystemdir') %>
