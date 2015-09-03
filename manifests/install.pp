@@ -37,7 +37,7 @@ class artifactory::install (
   }
 
   require staging
-  $file = "artifactory-powerpack-standalone-${version}.${format}"
+  $file = "jfrog-artifactory-pro-${version}.${format}"
   staging::file { $file:
     source  => "${downloadURL}/${file}",
     timeout => 1800,
@@ -71,7 +71,7 @@ class artifactory::install (
     refreshonly => true,
     subscribe   => User[$artifactory::user]
   }
-  
+
   exec { "chmod_${webappdir}/tomcat/bin":
     command     => "/bin/chmod a+x ${webappdir}/tomcat/bin/*",
     require     => Exec["chown_${webappdir}"],

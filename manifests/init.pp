@@ -1,5 +1,5 @@
 class artifactory(
-  $version      = '9.0.2',
+  $version      = '4.0.2',
   $product      = 'artifactory',
   $format       = 'zip',
   $installdir   = '/opt/artifactory',
@@ -25,7 +25,7 @@ class artifactory(
 
   $downloadURL  = undef,
 ) {
-  $webappdir    = "${installdir}/artifactory-powerpack-${version}"
+  $webappdir    = "${installdir}/artifactory-pro-${version}"
 
   anchor { 'artifactory::start': } ->
   class { 'artifactory::install':
